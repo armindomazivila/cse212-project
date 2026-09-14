@@ -1,8 +1,22 @@
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-// TODO Problem 1 - Run test cases and record any defects the test code finds in the comment above the test method.
-// DO NOT MODIFY THE CODE IN THE TESTS in this file, just the comments above the tests. 
-// Fix the code being tested to match requirements and make all tests pass. 
+// Defect(s) Found: The queue does not correctly maintain the expected turn order
+// when people with  remaining turns are re-enqueued.
+
+// The midway test:
+// Defects(s) Found: The queue does not correctly maintain th turn order when 
+// a new person is a added while other people are still turns.
+
+// For zero turns: 
+// Defects(s) Found: The queue does not re-enqueue people with 0 turns, even though
+// 0 turns means the person has an infinite number of turns.
+
+// got negative turns:
+// Defects(s) Found: The queue does not re-enqueue people with negative turns, even
+// though negative turns means the person has an infinite number of turns.
+
+// For empty queue: The queue not re-enqueue people with negative turns, 
+// even though negative turns means the person has an infinite number of turns.  
 
 [TestClass]
 public class TakingTurnsQueueTests
