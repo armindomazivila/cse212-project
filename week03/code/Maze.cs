@@ -58,7 +58,7 @@ public class Maze
         {
             throw new InvalidOperationException("Can't go that way!");
         }
-        _currY++;
+        _currY--;
     }
 
 
@@ -72,7 +72,7 @@ public class Maze
         {
             throw new InvalidOperationException("Can't go that way!");
         }
-        _currY--;
+        _currY++;
 
 
     }

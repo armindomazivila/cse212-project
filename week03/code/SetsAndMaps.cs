@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 
 public static class SetsAndMaps
@@ -24,22 +25,20 @@ public static class SetsAndMaps
         var wordSet = new HashSet<string>(words);
         var pairs = new List<string>();
 
-        foreach (string word in words)
+        foreach (var word in words)
         {
-            if (word[0] == word[1]) // Skip words with identical letters
+            if (word[0] == word[1])
                 continue;
 
-            string reversed = $"{word[1]}{word[0]}";
-            if (wordSet.Contains(reversed))
-            {
-                if (string.Compare(word, reversed) < 0) // Ensure each pair is added only once
-                {
-                    pairs.Add($"{word} & {reversed}");
-                }
-            }
+            string reversed = new string(new[] { word[1], word[0] });
 
+            if (wordSet.Contains(reversed) && word[0] < word[1])
+            {
+                pairs.Add($"{word} & {reversed}");
+            }
         }
-        return pairs;
+
+        return pairs.ToArray();
     }
 
     /// <summary>
@@ -59,7 +58,7 @@ public static class SetsAndMaps
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
-            string degree = fields[1];
+            string degree = fields[3];
 
             if (degrees.ContainsKey(degree))
             {
@@ -92,6 +91,9 @@ public static class SetsAndMaps
     /// </summary>
     public static bool IsAnagram(string word1, string word2)
     {
+        word1 = word1.Replace(" ", "").ToLower();
+        word2 = word2.Replace(" ", "").ToLower();
+
         if (word1.Length != word2.Length)
             return false;
 
@@ -118,7 +120,6 @@ public static class SetsAndMaps
 
         return true;
     }
-
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 
     /// United States Geological Service (USGS) consisting of earthquake data.
@@ -146,9 +147,10 @@ public static class SetsAndMaps
         var featureCollection = JsonSerializer.Deserialize<FeatureCollection>(json, options);
 
         var earthquakes = new List<string>();
+
         foreach (var feature in featureCollection.Features)
         {
-            earthquakes.Add($"{feature.Properties.Place} - Magnitude: {feature.Properties.Mag}");
+            earthquakes.Add($"{feature.Properties.Place} - Mag {feature.Properties.Mag}");
         }
 
         return earthquakes.ToArray();
