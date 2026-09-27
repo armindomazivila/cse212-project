@@ -32,7 +32,7 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void InsertTail(int value)
     {
-        Node newNode = new(value)
+        Node newNode = new(value);
         if (_tail is null)
         {
             _head = newNode;
@@ -128,41 +128,6 @@ public class LinkedList : IEnumerable<int>
         }
     }
 
-    /// <summary>
-    /// Insert 'newValue' after the first occurrence of 'value' in the linked list.
-    /// </summary>
-    public void InsertAfter(int value, int newValue)
-    {
-        // Search for the node that matches 'value' by starting at the 
-        // head of the list.
-        Node? curr = _head;
-        while (curr is not null)
-        {
-            if (curr.Data == value)
-            {
-                // If the location of 'value' is at the end of the list,
-                // then we can call insert_tail to add 'new_value'
-                if (curr == _tail)
-                {
-                    InsertTail(newValue);
-                }
-                // For any other location of 'value', need to create a 
-                // new node and reconnect the links to insert.
-                else
-                {
-                    Node newNode = new(newValue);
-                    newNode.Prev = curr; // Connect new node to the node containing 'value'
-                    newNode.Next = curr.Next; // Connect new node to the node after 'value'
-                    curr.Next!.Prev = newNode; // Connect node after 'value' to the new node
-                    curr.Next = newNode; // Connect the node containing 'value' to the new node
-                }
-
-                return; // We can exit the function after we insert
-            }
-
-            curr = curr.Next; // Go to the next node to search for 'value'
-        }
-    }
 
     /// <summary>
     /// Remove the first node that contains 'value'.
