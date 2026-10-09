@@ -11,7 +11,7 @@ public class Node
 
     public void Insert(int value)
     {
-        // TODO Start Problem 1
+        // Insert th Unique values only.
 
         if (value < Data)
         {
@@ -31,15 +31,31 @@ public class Node
         }
     }
 
+    // if the value == Data, do nothing.
+    // This is how we ensure the tree only contains unique values. 
+
     public bool Contains(int value)
     {
-        // TODO Start Problem 2
-        return false;
+        if (value == Data)
+            return true;
+        else
+            if (value < Data)
+            {
+                if (Left is not null)
+                    return Left.Contains(value);
+            }
+        if (Right is not null)
+            return false;
+
+        return Right.Contains(value);
     }
 
     public int GetHeight()
     {
         // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+        int leftHeight = Left?.GetHeight() ?? 0;
+        int rightHeight = Right?.GetHeight() ?? 0;
+
+        return 1 + Math.Max(leftHeight, rightHeight); // Replace this line with the correct return statement(s)
     }
 }
