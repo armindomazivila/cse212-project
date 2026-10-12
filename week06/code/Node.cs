@@ -1,3 +1,5 @@
+Tree project Node.cs correction. 
+
 public class Node
 {
     public int Data { get; set; }
@@ -6,45 +8,47 @@ public class Node
 
     public Node(int data)
     {
-        this.Data = data;
+        Data = data;
     }
 
     public void Insert(int value)
     {
-        // Insert th Unique values only.
+        // Problem 1: Insert Unique Values Only
 
         if (value < Data)
         {
-            // Insert to the left
             if (Left is null)
                 Left = new Node(value);
             else
                 Left.Insert(value);
         }
-        else
+        else if (value > Data)
         {
-            // Insert to the right
             if (Right is null)
                 Right = new Node(value);
             else
                 Right.Insert(value);
         }
-    }
 
-    // if the value == Data, do nothing.
-    // This is how we ensure the tree only contains unique values. 
+        // If value == Data, do nothing.
+    }
 
     public bool Contains(int value)
     {
+        // Problem 2: Contains
+
         if (value == Data)
             return true;
-        else
-            if (value < Data)
-            {
-                if (Left is not null)
-                    return Left.Contains(value);
-            }
-        if (Right is not null)
+
+        if (value < Data)
+        {
+            if (Left is null)
+                return false;
+
+            return Left.Contains(value);
+        }
+
+        if (Right is null)
             return false;
 
         return Right.Contains(value);
@@ -52,10 +56,12 @@ public class Node
 
     public int GetHeight()
     {
-        // TODO Start Problem 4
+        // Problem 4: Tree Height
+        // An empty subtree has height 0.
+
         int leftHeight = Left?.GetHeight() ?? 0;
         int rightHeight = Right?.GetHeight() ?? 0;
 
-        return 1 + Math.Max(leftHeight, rightHeight); // Replace this line with the correct return statement(s)
+        return 1 + Math.Max(leftHeight, rightHeight);
     }
 }
