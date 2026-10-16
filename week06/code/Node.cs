@@ -1,5 +1,3 @@
-Tree project Node.cs correction. 
-
 public class Node
 {
     public int Data { get; set; }
